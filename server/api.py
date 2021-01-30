@@ -69,12 +69,9 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
 
     return return_market_data
 
-<<<<<<< HEAD
 @app.get("/reddit")
 async def get_reddit(ticker: str, start_date: str, stop_date: str, interval: str):
     return reddit.poll_reddit_data(parser.isoparse(start_date).timestamp(), parser.isoparse(stop_date).timestamp(), ticker)
-=======
->>>>>>> 085686a2a490010153fcd255fc305b14a8bed6b4
 
 @app.get("/FUCK")
 async def fuck():
