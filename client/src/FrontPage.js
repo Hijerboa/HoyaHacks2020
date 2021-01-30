@@ -8,23 +8,12 @@ import {
 } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import {Grid, Row, Col, InputGroup, FormControl} from 'react-bootstrap';
+import {Container, Row, Col, InputGroup, FormControl} from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from "react-bootstrap/Nav";
 import './frontpage.css';
-import Brand from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav"
-import Canvas from "Canvas"
-
-// This site has 3 pages, all of which are rendered
-// dynamically in the browser (not server rendered).
-//
-// Although the page does not ever refresh, notice how
-// React Router keeps the URL up to date as you navigate
-// through the site. This preserves the browser history,
-// making sure things like the back button and bookmarks
-// work properly.
+import Chart from "chart.js";
+import ReactDOM from "react-dom";
 
 export default function FrontPage() {
   return (
@@ -51,47 +40,73 @@ export default function FrontPage() {
   );
 }
 
-function Home() {
-  return (
-    <Container fluid>
-        <Row>
-            <Col xs={12} md={6}>
+class Home extends React.Component{
+    constructor(props){
+        super(props);
+    }
+
+    TestFunc(){
+        console.log("fuck");
+        //console.log(fetch(`http://127.0.0.1`));
+    }
+    render(){
+        return (
+            <Container fluid>
                 <Row>
-                    <Col>
-                        <div>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="tickerTitle">$</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                    placeholder="Ticker"
-                                    aria-lable="Ticker"
-                                    aria-descibedby="tickerTitle"
-                                />
-                            </InputGroup>
-                        </div>
+                    <Col xs={12} md={6}>
+                        <Row>
+                            <Col>
+                                <div>
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text id="tickerTitle">$</InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl
+                                            placeholder="Ticker"
+                                            aria-lable="Ticker"
+                                            aria-descibedby="tickerTitle"
+                                        />
+                                    </InputGroup>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <Row>
+                            <Col xs={4} md={4}>
+                                <CustomButton type="primary" interval="Hour" onClick={() => {console.log("Fuck");}}></CustomButton>
+                            </Col>
+                            <Col xs={4} md={4}>
+                                <CustomButton type="success" interval="Day"></CustomButton>
+                            </Col>
+                            <Col xs={4} md={4}>
+                                <CustomButton type="info" interval="Week"></CustomButton>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
-            </Col>
-            <Col xs={12} md={6}>
                 <Row>
-                    <Col xs={4} md={4}>
-                        <Button className="buttonboi" varient="primary" block>Hour</Button>
-                    </Col>
-                    <Col xs={4} md={4}>
-                        <Button className="buttonboi" variant="success" block>Day</Button>
-                    </Col>
-                    <Col xs={4} md={4}>
-                        <Button className="buttonboi" variant="info" block>Week</Button>
-                    </Col>
+                    {/*<CanvasComponent />*/}
                 </Row>
-            </Col>
-        </Row>
-        <Row>
-            <CanvasComponent />
-        </Row>
-    </Container>
-  );
+            </Container>
+        );
+    }
+}
+
+class CustomButton extends React.Component{
+    constructor(props){
+        super(props);
+    };
+
+    getButtonType(){
+        return "" + this.props.type;
+    }
+
+    render(){
+        return(
+            <Button className="buttonboi" varient={`${this.getButtonType()}`}  block>{this.props.interval}</Button>
+        );
+    }
 }
 
 function About() {
@@ -111,9 +126,10 @@ function About() {
  * Returns the JSON data for the stock ticker gathered by the API server.
  */
 // ticker: str, start_date: str, stop_date: str
+/*
 async function requestChartData(ticker, start_date, stop_date, interval) {
     var api_str = "http://localhost:8000/data";
-    var params = URLSearchParams();
+    var params = new URLSearchParams();
     params.set('ticker', ticker);
     params.set('start_date', start_date);
     params.set('stop_date', stop_date);
@@ -172,9 +188,10 @@ class CanvasComponent extends React.Component {
   // Question: Can the render function accept arguments? If not, is there a way to 
   //  programatically determine the width and height below?
   render() {
+
     return (
       <canvas ref="stonkCanvas" width={400} height={400}/>
     );
   }
 }
-ReactDOM.render(<CanvasComponent/>, document.getElementById('stonkContainer'));
+//ReactDOM.render(<CanvasComponent/>, document.getElementById('stonkContainer'));*/
