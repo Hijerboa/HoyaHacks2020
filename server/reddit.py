@@ -127,5 +127,5 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 3, int
 
     return ret
 
-print(poll_reddit_data(parser.isoparse('2021-01-28').timestamp(), parser.isoparse('2021-01-29').timestamp(), 'GME'))
+#print(poll_reddit_data(parser.isoparse('2021-01-28').timestamp(), parser.isoparse('2021-01-29').timestamp(), 'GME'))
 
