@@ -5,7 +5,7 @@ from dateutil import parser
 import time
 
 
-def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 2, interval = 3600, delay = 0.25):
+def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 3, interval = 3600, delay = 0.25):
     ticker_data = []
     noticker_data = []
 
@@ -31,17 +31,18 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 2, int
             print(r)
             msg = "ERROR: API call to pushshift failed with status code " + str(r.status_code)
             print(msg)
-            return 0
-        json_result = json.loads(r.text)
-        for x in json_result['data']:
-            noticker_data.append(x)
-        count_noticker += len(json_result['data'])
-        if len(json_result['data']) == 100:
-            section_start_timestamp = json_result['data'][-1]['created_utc']
-            #print(section_start_timestamp)
-            time.sleep(delay)
+            time.sleep(0.1)
         else:
-            complete = True
+            json_result = json.loads(r.text)
+            for x in json_result['data']:
+                noticker_data.append(x)
+            count_noticker += len(json_result['data'])
+            if len(json_result['data']) == 100:
+                section_start_timestamp = json_result['data'][-1]['created_utc']
+                #print(section_start_timestamp)
+                time.sleep(0.05)
+            else:
+                complete = True
         callnum += 1
     print(f'count_noticker = {count_noticker}')
 
@@ -66,19 +67,20 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 2, int
         r = requests.get('https://api.pushshift.io/reddit/submission/search', params=p)
         if not r.status_code == 200:
             print(r)
-            msg = "ERROR: API call to pushshift failed with status code " + str(r.status_code)
+            msg = "ERROR: API call to pushshift failed with status code " + str(r.status_code) + " ...Passing"
             print(msg)
-            return 0
-        json_result = json.loads(r.text)
-        for x in json_result['data']:
-            ticker_data.append(x)
-        count_ticker += len(json_result['data'])
-        if len(json_result['data']) == 100:
-            section_start_timestamp = json_result['data'][-1]['created_utc']
-            #print(section_start_timestamp)
-            time.sleep(delay)
+            time.sleep(0.1)
         else:
-            complete = True
+            json_result = json.loads(r.text)
+            for x in json_result['data']:
+                ticker_data.append(x)
+            count_ticker += len(json_result['data'])
+            if len(json_result['data']) == 100:
+                section_start_timestamp = json_result['data'][-1]['created_utc']
+                #print(section_start_timestamp)
+                time.sleep(0.05)
+            else:
+                complete = True
         callnum += 1
     print(f'count_ticker = {count_ticker}')
 
@@ -109,14 +111,14 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 2, int
             else:
                 break
     
-    #print(len(ticker_data))
-    #print(len(noticker_data))
+    print(len(ticker_data))
+    print(len(noticker_data))
 
-    #print(ticker_buckets)
-    #print(noticker_buckets)
+    print(ticker_buckets)
+    print(noticker_buckets)
 
     ret = []
-    for x in zip(bucket_timestamps, ticker_buckets.values(), noticker_buckets.values()): #[0,1,2], [3,4,5], [6,7,8] => [0,3,6], [1,4,7], [2,5,8]
+    for x in zip(bucket_timestamps, ticker_buckets.values(), noticker_buckets.values()): 
         #print(x)
         ret.append({
             'x': int(x[0]),
@@ -125,8 +127,5 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 2, int
 
     return ret
 
+print(poll_reddit_data(parser.isoparse('2021-01-28').timestamp(), parser.isoparse('2021-01-29').timestamp(), 'GME'))
 
-#print(poll_reddit_data(parser.isoparse('2021-01-28').timestamp(), parser.isoparse('2021-01-29').timestamp(), 'GME'))
-
-
-    
