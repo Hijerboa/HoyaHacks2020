@@ -35,9 +35,9 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
         'symbols' : ticker,
         'date_from' : start_date,
         'date-to' : stop_date,
-        #'interval' : '1h',
-        'limit' : '1000'
-        #'offset' : str(offset)
+        'interval' : '1h',
+        'limit' : '1000',
+        'offset' : str(offset)
         }
 
         r = requests.get('http://api.marketstack.com/v1/intraday', params=p)
@@ -49,14 +49,14 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
         
         json_result = json.loads(r.text)
 
-        #update our target number and increment our offset
+        ##update our target number and increment our offset
         target = int(json_result['pagination']['total'])
         offset += 1000
 
         #add result to current collected market data
         for x in json_result['data']:
             market_data.append(x)
-        #print(market_data)
+        print(market_data)
         market_data = sorted(market_data, key= lambda x:(x['date']))
         print('got through one iteration')
 
@@ -65,10 +65,9 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
     for point in market_data:
         posix_stamp = parser.isoparse(point['date']).timestamp()
         return_market_data.append({'x': posix_stamp, 'y': (float(point['open']) + float(point['close'])) / 2.0})
-    
-
 
     return return_market_data
+
 
 @app.get("/FUCK")
 async def fuck():
@@ -76,4 +75,3 @@ async def fuck():
     This says fuck
     """
     return {"message" : "haha our repo says fuck :^)"}
-
