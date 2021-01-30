@@ -14,6 +14,7 @@ import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar'
 import Brand from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav"
+import Canvas from "Canvas"
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -105,29 +106,6 @@ function Dashboard() {
   );
 }
 
-function Chart() {
-    return (
-        <div id="stonkContainer" style="width: 100%; height: 100%;">
-            <canvas id="stonkChart" width="400" height="400"></canvas>
-            <script>
-                var stonkCtx = document.getElementById('stonkChart').getContext('2d');
-                var stonkChart = new Chart(stonkCtx, {
-                // change the type of chart here
-                type: "line",
-                // setup the data options here
-                data: {
-
-            },
-                // configure the chart here
-                options: {
-
-            }
-            });
-            </script>
-        </div>
-    );
-}
-
 /**
  * Requests data for the chart in an asynchrounous fashion.
  * Use the `await requestChartData().then(data => {});` pattern when calling this function.
@@ -151,3 +129,55 @@ async function requestChartData(ticker, start_date, stop_date) {
     });
     return response.json();
 }
+
+// You should be able to just create an instance of this component to create
+//  the stonk chart
+class CanvasComponent extends React.Component {
+  componentDidMount() {
+    this.updateCanvas();
+  }
+  updateCanvas() {
+    // TODO: Necessary data can be grabbed from the UI elements through the DOM
+    //  It still needs to be passed to the requestChartData function
+    requestChartData().then(stonkData => {
+      // TODO: Draw the data on the chart
+      const ctx = this.refs.stonkCanvas.getContext('2d');
+      // create the chart instance
+      const stonkChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          // TODO: Update the indices here for stonkData once they've been finalized at server.
+          datasets: [
+            {
+              // TODO: Come up with a label
+              label: "",
+              data: stonkData['']
+            },
+            {
+              // TODO: Come up with a label
+              label: "",
+              data: stonkData['']
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    });
+  }
+  // Question: Can the render function accept arguments? If not, is there a way to 
+  //  programatically determine the width and height below?
+  render() {
+    return (
+      <canvas ref="stonkCanvas" width={400} height={400}/>
+    );
+  }
+}
+ReactDOM.render(<CanvasComponent/>, document.getElementById('stonkContainer'));
