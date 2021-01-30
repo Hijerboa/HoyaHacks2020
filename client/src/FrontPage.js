@@ -87,6 +87,9 @@ function Home() {
                 </Row>
             </Col>
         </Row>
+        <Row>
+            <CanvasComponent />
+        </Row>
     </Container>
   );
 }
@@ -99,25 +102,6 @@ function About() {
   );
 }
 
-
-/*function Chart() {
-    return (
-        <div id="stonkContainer" style="width: 100%; height: 100%;">
-            <canvas id="stonkChart" width="400" height="400"></canvas>
-            <script>
-                var stonkCtx = document.getElementById('stonkChart').getContext('2d');
-                var chartConfig = {
-                    type: "line",
-                    data: { },
-                    options:{ }
-                }
-                var stonkChart = new Chart(stonkCtx, {}); //type: "line", data: { }, options:{ } });
-            </script>
-        </div>
-    );
-}*/
-
-
 /**
  * Requests data for the chart in an asynchrounous fashion.
  * Use the `await requestChartData().then(data => {});` pattern when calling this function.
@@ -128,7 +112,7 @@ function About() {
  */
 // ticker: str, start_date: str, stop_date: str
 async function requestChartData(ticker, start_date, stop_date) {
-    var api_str = "http://localhost:8000";
+    var api_str = "http://localhost:8000/data";
     var params = URLSearchParams();
     params.set('ticker', ticker);
     params.set('start_date', start_date);
