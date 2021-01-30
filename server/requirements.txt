@@ -2,4 +2,3 @@ fastapi==0.63.0
 requests==2.25.1
 python-dateutil==2.8.1
 uvicorn==0.13.3
-praw==7.1.0
