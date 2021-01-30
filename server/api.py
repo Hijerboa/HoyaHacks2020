@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import json, requests, datetime
 import cred_handler
 from dateutil import parser
+import reddit
 
 app = FastAPI()
 
@@ -17,7 +18,7 @@ async def get_tickers(ticker_start: str):
     # TODO: This. It's low priority.
     return {"message" : "dummy return message"}
 
-@app.get("/data")
+@app.get("/market")
 async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: str):
     """
     Return the reddit and stock market data for the desired ticker, interval and time period.
@@ -58,7 +59,7 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
             market_data.append(x)
         print(market_data)
         market_data = sorted(market_data, key= lambda x:(x['date']))
-        print('got through one iteration')
+        #print('got through one iteration')
 
     # Format data as a list of prices at timestep
     return_market_data = []
@@ -68,6 +69,12 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str, interval: 
 
     return return_market_data
 
+<<<<<<< HEAD
+@app.get("/reddit")
+async def get_reddit(ticker: str, start_date: str, stop_date: str, interval: str):
+    return reddit.poll_reddit_data(parser.isoparse(start_date).timestamp(), parser.isoparse(stop_date).timestamp(), ticker)
+=======
+>>>>>>> 085686a2a490010153fcd255fc305b14a8bed6b4
 
 @app.get("/FUCK")
 async def fuck():
