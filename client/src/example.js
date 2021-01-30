@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -27,7 +33,7 @@ export default function BasicExample() {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/owo">OwO</Link>
           </li>
         </ul>
 
@@ -47,8 +53,8 @@ export default function BasicExample() {
           <Route path="/about">
             <About />
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/owo">
+            <Owogenerator />
           </Route>
         </Switch>
       </div>
@@ -63,6 +69,10 @@ function Home() {
   return (
     <div>
       <h2>Home</h2>
+      <Alert dismissible variant="success">
+        <Alert.Heading>Oh no what are you doing step-code?</Alert.Heading>
+        <p>OwO whats this?</p>
+      </Alert>
     </div>
   );
 }
@@ -72,6 +82,31 @@ function About() {
     <div>
       <h2>About</h2>
     </div>
+  );
+}
+
+function Owogenerator(){
+  const [show, setShow] = useState(true);
+
+  return(
+    <>
+      <Alert show={show} varient="danger">
+        <Alert.Heading>
+          OwO whats this?
+        </Alert.Heading>
+        <p>
+          Uh oh! It looks like we made a fucky-wucky! Click the unfucky wucky button fix it!
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setShow(false)} variant="outline-danger">
+            Fix it Daddy!
+          </Button>
+        </div>
+      </Alert>
+
+      {!show && <Button onClick={() => setShow(true)}>Show the fucky wucky! ;-;</Button>}
+    </>
   );
 }
 
