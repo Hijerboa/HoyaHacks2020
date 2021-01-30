@@ -9,9 +9,10 @@ import {
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {Grid, Row, Col, InputGroup, FormControl} from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar'
+import Nav from "react-bootstrap/Nav";
+import './frontpage.css';
 import Brand from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav"
 import Canvas from "Canvas"
@@ -29,18 +30,18 @@ export default function FrontPage() {
   return (
     <Router>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Link to="/"><Navbar.Brand Link to="/">WSB Correlator</Navbar.Brand></Link>
+            <Link to="/"><Navbar.Brand>WSB Correlator</Navbar.Brand></Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Link to="/about"><Nav.Link>About</Nav.Link></Link>
+                    <Nav.Link><Link to="/about">About</Link></Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
       <hr />
       <Switch>
         <Route exact path="/">
-          <Home />
+            <Home />
         </Route>
         <Route exact path="/about">
           <About />
@@ -50,18 +51,43 @@ export default function FrontPage() {
   );
 }
 
-// You can think of these components as "pages"
-// in your app.
-
 function Home() {
   return (
-    <div>
-      <h2>Home</h2>
-      <Alert dismissible variant="success">
-        <Alert.Heading>Oh no what are you doing step-code?</Alert.Heading>
-        <p>OwO whats this?</p>
-      </Alert>
-    </div>
+    <Container fluid>
+        <Row>
+            <Col xs={12} md={6}>
+                <Row>
+                    <Col>
+                        <div>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="tickerTitle">$</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                    placeholder="Ticker"
+                                    aria-lable="Ticker"
+                                    aria-descibedby="tickerTitle"
+                                />
+                            </InputGroup>
+                        </div>
+                    </Col>
+                </Row>
+            </Col>
+            <Col xs={12} md={6}>
+                <Row>
+                    <Col xs={4} md={4}>
+                        <Button className="buttonboi" varient="primary" block>Hour</Button>
+                    </Col>
+                    <Col xs={4} md={4}>
+                        <Button className="buttonboi" variant="success" block>Day</Button>
+                    </Col>
+                    <Col xs={4} md={4}>
+                        <Button className="buttonboi" variant="info" block>Week</Button>
+                    </Col>
+                </Row>
+            </Col>
+        </Row>
+    </Container>
   );
 }
 
@@ -73,38 +99,24 @@ function About() {
   );
 }
 
-function Owogenerator(){
-  const [show, setShow] = useState(true);
 
-  return(
-    <>
-      <Alert show={show} varient="danger">
-        <Alert.Heading>
-          OwO whats this?
-        </Alert.Heading>
-        <p>
-          Uh oh! It looks like we made a fucky-wucky! Click the unfucky wucky button fix it!
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <Button onClick={() => setShow(false)} variant="outline-danger">
-            Fix it Daddy!
-          </Button>
+/*function Chart() {
+    return (
+        <div id="stonkContainer" style="width: 100%; height: 100%;">
+            <canvas id="stonkChart" width="400" height="400"></canvas>
+            <script>
+                var stonkCtx = document.getElementById('stonkChart').getContext('2d');
+                var chartConfig = {
+                    type: "line",
+                    data: { },
+                    options:{ }
+                }
+                var stonkChart = new Chart(stonkCtx, {}); //type: "line", data: { }, options:{ } });
+            </script>
         </div>
-      </Alert>
+    );
+}*/
 
-      {!show && <Button onClick={() => setShow(true)}>Show the fucky wucky! ;-;</Button>}
-    </>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  );
-}
 
 /**
  * Requests data for the chart in an asynchrounous fashion.
