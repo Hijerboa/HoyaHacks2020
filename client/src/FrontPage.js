@@ -21,44 +21,15 @@ import Col from 'react-bootstrap/Col';
 // making sure things like the back button and bookmarks
 // work properly.
 
-export default function BasicExample() {
+export default function FrontPage() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/owo">OwO</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/owo">
-            <Owogenerator />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <Container fluid="lg">
+      <Row>
+        <Col>1 of 1</Col>
+          <Col>2 of 1 :^)</Col>
+          <Col>3 of 1</Col>
+      </Row>
+    </Container>
   );
 }
 
