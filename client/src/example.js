@@ -82,3 +82,50 @@ function Dashboard() {
     </div>
   );
 }
+
+function Chart() {
+  return (
+    <div id="stonkContainer" style="width: 100%; height: 100%;">
+      <canvas id="stonkChart" width="400" height="400"></canvas>
+      <script>
+        var stonkCtx = document.getElementById('stonkChart').getContext('2d');
+        var stonkChart = new Chart(stonkCtx, {
+          // change the type of chart here
+          type: "line",
+          // setup the data options here
+          data: {
+
+          },
+          // configure the chart here
+          options: {
+
+          }
+        });
+      </script>
+    </div>
+  );
+}
+
+/**
+ * Requests data for the chart in an asynchrounous fashion.
+ * Use the `await requestChartData().then(data => {});` pattern when calling this function.
+ * :param ticker: The stock ticker to lookup.
+ * :param start_date: The start date of the lookup window.
+ * :param end_date: The end date of the lookup window.
+ * Returns the JSON data for the stock ticker gathered by the API server.
+ */
+// ticker: str, start_date: str, stop_date: str
+async function requestChartData(ticker, start_date, stop_date) {
+  var api_str = "http://localhost:8000";
+  var params = URLSearchParams();
+  params.set('ticker', ticker);
+  params.set('start_date', start_date);
+  params.set('stop_date', stop_date);
+  const response = await fetch(new URL(api_str + params.toString()), {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin'
+  });
+  return response.json();
+}
