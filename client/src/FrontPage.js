@@ -111,12 +111,13 @@ function About() {
  * Returns the JSON data for the stock ticker gathered by the API server.
  */
 // ticker: str, start_date: str, stop_date: str
-async function requestChartData(ticker, start_date, stop_date) {
+async function requestChartData(ticker, start_date, stop_date, interval) {
     var api_str = "http://localhost:8000/data";
     var params = URLSearchParams();
     params.set('ticker', ticker);
     params.set('start_date', start_date);
     params.set('stop_date', stop_date);
+    params.set('interval', interval);
     const response = await fetch(new URL(api_str + params.toString()), {
         method: 'GET',
         mode: 'cors',
