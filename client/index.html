@@ -196,7 +196,13 @@
                                                 yAxes: [
                                                     {
                                                         id: 'yA',
-                                                        position: 'left'
+                                                        position: 'left',
+                                                        ticks: {
+                                                            beginAtZero: true,
+                                                            max: 1,
+                                                            stepSize: 0.10
+                                                        },
+                                                        type: 'linear'
                                                     },
                                                     {
                                                         id: 'yB',
