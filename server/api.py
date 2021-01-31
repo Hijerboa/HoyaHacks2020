@@ -34,7 +34,7 @@ async def get_tickers(ticker_start: str):
 @app.get("/market")
 async def get_plot_data(ticker: str, start_date: str, stop_date: str):
     """
-    Return the reddit and stock market data for the desired ticker, interval and time period.
+    Return the stock market data for the desired ticker, interval and time period.
     """
     
     offset = 0
@@ -78,12 +78,14 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str):
     return_market_data = []
     for point in market_data:
         posix_stamp = parser.isoparse(point['date']).timestamp()
-        return_market_data.append({'x': posix_stamp, 'y': (float(point['open']) + float(point['close'])) / 2.0})
-
+        return_market_data.append({'x': posix_stamp, 'y': (float(point['high']) + float(point['low'])) / 2.0})
+    #print(return_market_data)
     return return_market_data
 
 @app.get("/reddit")
 async def get_reddit(ticker: str, start_date: str, stop_date: str, thresh: str):
+    if int(thresh) < 2:
+        return []
     return reddit.poll_reddit_data(parser.isoparse(start_date).timestamp(), parser.isoparse(stop_date).timestamp(), ticker, threshold=int(thresh))
 
 @app.get("/FUCK")
