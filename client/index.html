@@ -148,8 +148,12 @@
                             requestChartData(ticker, start_date, stop_date, numComments)
                                 // Promise succeeded, got the data
                                 .then(([redditData, marketData]) => {
-                                    minMax(redditData);
-                                    minMax(marketData);
+                                    if (redditData === []) {
+                                        minMax(redditData);
+                                    }
+                                    if (marketData === []) {
+                                        minMax(marketData);
+                                    }
                                     chart = new Chart(ctx, {
                                         type: 'line',
                                         data: {
