@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "HELLO YOU FUCKERS"}
+    return {"message": "HELLO"}
 
 @app.get("/tickers")
 async def get_tickers(ticker_start: str):
@@ -86,9 +86,3 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str):
 async def get_reddit(ticker: str, start_date: str, stop_date: str, thresh: str):
     return reddit.poll_reddit_data(parser.isoparse(start_date).timestamp(), parser.isoparse(stop_date).timestamp(), ticker, threshold=int(thresh))
 
-@app.get("/FUCK")
-async def fuck():
-    """
-    This says fuck
-    """
-    return {"message" : "haha our repo says fuck :^)"}

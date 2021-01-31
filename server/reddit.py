@@ -106,7 +106,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
         else:
             json_result = json.loads(r.text)
             for x in json_result['data']:
-                print(x)
+                #print(x)
                 noticker_data.append(x)
             count_noticker += len(json_result['data'])
             if len(json_result['data']) == 100:
@@ -145,7 +145,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
         else:
             json_result = json.loads(r.text)
             for x in json_result['data']:
-                print(x)
+                #print(x)
                 ticker_data.append(x)
             count_ticker += len(json_result['data'])
             if len(json_result['data']) == 100:
