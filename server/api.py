@@ -78,8 +78,7 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str):
     return_market_data = []
     for point in market_data:
         posix_stamp = parser.isoparse(point['date']).timestamp()
-        return_market_data.append({'x': posix_stamp, 'y': float(point['open'])})
-        return_market_data.append({'x': posix_stamp+3600, 'y': float(point['close'])})
+        return_market_data.append({'x': posix_stamp, 'y': (float(point['open']) + float(point['close'])) / 2.0})
 
     return return_market_data
 
