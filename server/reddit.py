@@ -195,7 +195,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
         #print(x)
         ret.append({
             'x': int(x[0]),
-            'y': float(x[1]) / float(x[2]) if not float(x[2]) == 0 else -1
+            'y': float(x[1]) / float(x[2]) if not float(x[2]) == 0 else 0
         })
     ed = time.time()
     delta = ed - st
