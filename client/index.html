@@ -77,6 +77,15 @@
                     <canvas id="stonkChart"></canvas>
                     <script>
                         let chart = null;
+
+                        function minMax(objArray) {
+                            let xValues = objArray.map(a => a.x);
+                            let minX = Math.min.apply(Math, xValues);
+                            let maxX = Math.max.apply(Math, xValues);
+                            objArray.forEach(element => {
+                                element.x = (element.x - minX) / (maxX - minX);
+                            });
+                        }
     
                         function generateNewChart(interval) {
                             if (interval !== "Hour" && interval !== "Day" && interval !== "Week") {
@@ -104,7 +113,8 @@
                             requestChartData(ticker, start_date, stop_date, interval)
                                 // Promise succeeded, got the data
                                 .then(([redditData, marketData]) => {
-                                    console.log(redditData, marketData);
+                                    minMax(redditData);
+                                    minMax(marketData);
                                     chart = new Chart(ctx, {
                                         type: 'line',
                                         data: {
@@ -115,14 +125,50 @@
                                             },*/ {
                                                 label: 'Number of Posts',
                                                 data: redditData,
+                                                backgroundColor: 'rgba(255, 153, 66, 1)',
+                                                xAxisID: 'xA',
+                                                yAxisID: 'yA',
+                                                fill: false,
+                                                borderColor: 'rgba(255, 153, 66, 1)' 
                                                 // Overrides the chart type to line for this dataset
                                                 //type: 'line'
                                             }, {
                                                 label: 'Stock Price',
                                                 data: marketData,
+                                                backgroundColor: 'rgba(61, 175, 232, 1)',
+                                                xAxisID: 'xA',
+                                                yAxisID: 'yB',
+                                                fill: false,
+                                                borderColor: 'rgba(61, 175, 232, 1)',
+                                                lineTension: 0
                                                 // Overrides the chart type to line for this dataset
                                                 //type: 'line'
                                             }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                xAxes: [
+                                                    {
+                                                        id: 'xA',
+                                                        ticks: {
+                                                            beginAtZero: true,
+                                                            max: 1,
+                                                            stepSize: 0.10
+                                                        },
+                                                        type: 'linear'
+                                                    }
+                                                ],
+                                                yAxes: [
+                                                    {
+                                                        id: 'yA',
+                                                        position: 'left'
+                                                    },
+                                                    {
+                                                        id: 'yB',
+                                                        position: 'right'
+                                                    }
+                                                ]
+                                            }
                                         } 
                                     });
                                 });
