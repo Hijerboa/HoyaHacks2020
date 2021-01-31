@@ -46,10 +46,10 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str):
         # Set up request for marketstack API
         p = {
         'access_key' : cred_handler.get_secret('quickstart_key'),
-        'symbols' : ticker,
+        'symbols' : ticker.upper(),
         'date_from' : start_date[:10],
         'date-to' : stop_date[:10],
-        'interval' : '1h',
+        #'interval' : '1h',
         'limit' : '1000',
         'offset' : str(offset)
         }
