@@ -65,6 +65,7 @@ class Home extends React.Component{
                                             placeholder="Ticker"
                                             aria-lable="Ticker"
                                             aria-descibedby="tickerTitle"
+                                            id="tickerTextBox"
                                         />
                                     </InputGroup>
                                 </div>
@@ -74,19 +75,19 @@ class Home extends React.Component{
                     <Col xs={12} md={6}>
                         <Row>
                             <Col xs={4} md={4}>
-                                <CustomButton type="primary" interval="Hour" onClick={() => {console.log("Fuck");}}></CustomButton>
+                                <Button type="primary" interval="Hour" onClick={this.TestFunc.bind(this)}>Hour</Button>
                             </Col>
                             <Col xs={4} md={4}>
-                                <CustomButton type="success" interval="Day"></CustomButton>
+                                <Button type="success" interval="Day">Day</Button>
                             </Col>
                             <Col xs={4} md={4}>
-                                <CustomButton type="info" interval="Week"></CustomButton>
+                                <Button type="info" interval="Week">Week</Button>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
                 <Row>
-                    {/*<CanvasComponent />*/}
+                    {<CanvasComponent />}
                 </Row>
             </Container>
         );
@@ -126,32 +127,46 @@ function About() {
  * Returns the JSON data for the stock ticker gathered by the API server.
  */
 // ticker: str, start_date: str, stop_date: str
-/*
 async function requestChartData(ticker, start_date, stop_date, interval) {
-    var api_str = "http://localhost:8000/data";
+    var api_str = "http://localhost:8000";
+    
     var params = new URLSearchParams();
     params.set('ticker', ticker);
     params.set('start_date', start_date);
     params.set('stop_date', stop_date);
     params.set('interval', interval);
-    const response = await fetch(new URL(api_str + params.toString()), {
+    const redditData = await fetch(new URL(api_str + "/reddit" + params.toString()), {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin'
     });
-    return response.json();
+
+    var params = new URLSearchParams();
+    params.set('ticker', ticker);
+    params.set('start_date', start_date);
+    params.set('stop_date', stop_date);
+    params.set('interval', interval);
+    const marketData = await fetch(new URL(api_str + "/market" + params.toString()), {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin'
+    });
+    
+    return {"marketData": marketData.json(), "redditData": redditData.json()};
 }
 
 // You should be able to just create an instance of this component to create
 //  the stonk chart
 class CanvasComponent extends React.Component {
-  componentDidMount() {
-    this.updateCanvas();
-  }
+  // Do nothing on mount! The updateCanvas method will be called as needed.
+  componentDidMount() { }
   updateCanvas() {
     // TODO: Necessary data can be grabbed from the UI elements through the DOM
     //  It still needs to be passed to the requestChartData function
+    //ticker: str, start_date: str, stop_date: str, interval: str
+    var ticker = document.getElementById("tickerTextBox").getAttribute("value");
     requestChartData().then(stonkData => {
       // TODO: Draw the data on the chart
       const ctx = this.refs.stonkCanvas.getContext('2d');
@@ -163,13 +178,13 @@ class CanvasComponent extends React.Component {
           datasets: [
             {
               // TODO: Come up with a label
-              label: "",
-              data: stonkData['']
+              label: "Reddit Mentions",
+              data: stonkData['redditData']
             },
             {
               // TODO: Come up with a label
-              label: "",
-              data: stonkData['']
+              label: "Stock Price",
+              data: stonkData['marketData']
             }
           ]
         },
@@ -194,4 +209,3 @@ class CanvasComponent extends React.Component {
     );
   }
 }
-//ReactDOM.render(<CanvasComponent/>, document.getElementById('stonkContainer'));*/
