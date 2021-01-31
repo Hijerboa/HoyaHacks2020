@@ -24,7 +24,7 @@ def poll_reddit_nums(start_timestamp, stop_timestamp, ticker, threshold = 50, in
             'sort_by' : 'created_utc',
             'after' : int(section_start_timestamp),
             'before' : int(stop_timestamp),
-            'num_comments' :  '>'+str(int(threshold))
+            'num_comments' :  '>'+str(threshold)
         }
 
         r = requests.get('https://api.pushshift.io/reddit/submission/search', params=p)

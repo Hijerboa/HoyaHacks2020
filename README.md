@@ -8,4 +8,4 @@ WallStreetBets Correlator is an API and web front end that show the proportion o
 | Endpoint | Usage | Parameters |
 | -------- | ----- | ---------- |
 | /market | Returns the value of the given ticker at each applicable timestep | start_date, end_date, ticker |
-| /reddit | Returns the ratio of posts with more than 50 comments mentioning the stock ticker on r/wallstreetbets at each applicable timestep | start_date, end_date, ticker |
+| /reddit | Returns the ratio of posts with more than \<threshold\> comments mentioning the stock ticker on r/wallstreetbets at each applicable timestep | start_date, end_date, ticker, threshold |
