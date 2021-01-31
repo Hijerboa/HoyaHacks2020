@@ -33,9 +33,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-            </li>
         </ul>
     </div>
 </nav>
@@ -148,10 +145,10 @@
                             requestChartData(ticker, start_date, stop_date, numComments)
                                 // Promise succeeded, got the data
                                 .then(([redditData, marketData]) => {
-                                    if (redditData === []) {
+                                    if (Array.isArray(redditData)) {
                                         minMax(redditData);
                                     }
-                                    if (marketData === []) {
+                                    if (Array.isArray(marketData)) {
                                         minMax(marketData);
                                     }
                                     chart = new Chart(ctx, {
