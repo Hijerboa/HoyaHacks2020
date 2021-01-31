@@ -33,10 +33,6 @@ async function requestChartData(ticker, start_date, stop_date, interval) {
         cache: 'no-cache',
         credentials: 'same-origin'
     });
-    
-    return {"marketData": marketData.json(), "redditData": redditData.json()};
-}
 
-function intervalClickHandler() {
-
+    return Promise.all([redditData.json(), marketData.json()]);
 }
