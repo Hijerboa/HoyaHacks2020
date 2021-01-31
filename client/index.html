@@ -148,8 +148,12 @@
                             requestChartData(ticker, start_date, stop_date, numComments)
                                 // Promise succeeded, got the data
                                 .then(([redditData, marketData]) => {
-                                    minMax(redditData);
-                                    minMax(marketData);
+                                    if (redditData === []) {
+                                        minMax(redditData);
+                                    }
+                                    if (marketData === []) {
+                                        minMax(marketData);
+                                    }
                                     chart = new Chart(ctx, {
                                         type: 'line',
                                         data: {
@@ -158,7 +162,7 @@
                                                 label: '',
                                                 data: stonkData['']
                                             },*/ {
-                                                label: 'Number of Posts',
+                                                label: 'Ratio of Relevant Posts',
                                                 data: redditData,
                                                 backgroundColor: 'rgba(255, 153, 66, 1)',
                                                 xAxisID: 'xA',
@@ -168,7 +172,7 @@
                                                 // Overrides the chart type to line for this dataset
                                                 //type: 'line'
                                             }, {
-                                                label: 'Stock Price',
+                                                label: 'Stonk Price',
                                                 data: marketData,
                                                 backgroundColor: 'rgba(61, 175, 232, 1)',
                                                 xAxisID: 'xA',
@@ -206,6 +210,10 @@
                                                     },
                                                     {
                                                         id: 'yB',
+                                                        ticks: {
+                                                            beginAtZero: true,
+                                                        },
+                                                        type: 'linear',
                                                         position: 'right'
                                                     }
                                                 ]
