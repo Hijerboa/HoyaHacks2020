@@ -99,9 +99,12 @@
                                 chart.destroy();
                             }
 
+                            let redditData, marketData;
+
                             requestChartData(ticker, start_date, stop_date, interval)
                                 // Promise succeeded, got the data
-                                .then((stonkData) => {
+                                .then(([redditData, marketData]) => {
+                                    console.log(redditData, marketData);
                                     chart = new Chart(ctx, {
                                         type: 'line',
                                         data: {
@@ -111,20 +114,18 @@
                                                 data: stonkData['']
                                             },*/ {
                                                 label: 'Number of Posts',
-                                                data: stonkData['redditData'],
+                                                data: redditData,
                                                 // Overrides the chart type to line for this dataset
                                                 //type: 'line'
                                             }, {
                                                 label: 'Stock Price',
-                                                data: stonkData['marketData'],
+                                                data: marketData,
                                                 // Overrides the chart type to line for this dataset
                                                 //type: 'line'
                                             }]
                                         } 
                                     });
-                                }).then(error => {
-                                    // TODO: Promise failed to resolve, do something here
-                            });
+                                });
                         }
                     </script>
                 </div>
