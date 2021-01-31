@@ -202,7 +202,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
     print(f'Executed in {delta} seconds.')
     return ret
 
-ret = poll_reddit_data(parser.isoparse('2021-01-27').timestamp(), parser.isoparse('2021-01-28').timestamp(), 'GME', threshold = 50)
-for x in ret:
-    print(x)
+#ret = poll_reddit_data(parser.isoparse('2021-01-27').timestamp(), parser.isoparse('2021-01-28').timestamp(), 'GME', threshold = 50)
+#for x in ret:
+#    print(x)
 
