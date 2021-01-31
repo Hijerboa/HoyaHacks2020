@@ -34,8 +34,8 @@ async def get_plot_data(ticker: str, start_date: str, stop_date: str):
         p = {
         'access_key' : cred_handler.get_secret('quickstart_key'),
         'symbols' : ticker,
-        'date_from' : start_date,
-        'date-to' : stop_date,
+        'date_from' : start_date[:10],
+        'date-to' : stop_date[:10],
         'interval' : '1h',
         'limit' : '1000',
         'offset' : str(offset)

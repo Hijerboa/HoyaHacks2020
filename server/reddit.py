@@ -126,7 +126,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
         print(f"call {callnum} for pushshift api")
         p = {
             'subreddit' : 'wallstreetbets',
-            'title' : 'GME',
+            'title' : ticker.upper(),
             'fields' : ['created_utc', 'num_comments', 'score'],
             'size' : 500,
             'sort' : 'asc',
@@ -202,7 +202,7 @@ def poll_reddit_data(start_timestamp, stop_timestamp, ticker, threshold = 50, in
     print(f'Executed in {delta} seconds.')
     return ret
 
-#ret = poll_reddit_nums(parser.isoparse('2021-01-27').timestamp(), parser.isoparse('2021-01-28').timestamp(), 'GME', threshold = 5)
-#for x in ret:
-#    print(x)
+ret = poll_reddit_data(parser.isoparse('2021-01-27').timestamp(), parser.isoparse('2021-01-28').timestamp(), 'GME', threshold = 50)
+for x in ret:
+    print(x)
 
