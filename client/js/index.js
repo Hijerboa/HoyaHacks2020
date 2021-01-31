@@ -8,7 +8,7 @@
  */
 // ticker: str, start_date: str, stop_date: str
 async function requestChartData(ticker, start_date, stop_date, threshold) {
-    var api_str = "http://localhost:8000";
+    var api_str = "http://192.168.0.2:8000";
     
     var params = new URLSearchParams();
     params.set('ticker', ticker);
